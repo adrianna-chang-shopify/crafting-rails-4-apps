@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.version     = MailForm::VERSION
   spec.authors     = ["Adrianna Chang"]
   spec.email       = ["adrianna.chang@shopify.com"]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of MailForm."
-  spec.description = "TODO: Description of MailForm."
+  spec.homepage    = "https://github.com/adrianna-chang-shopify/crafting-rails-4-apps"
+  spec.summary     = "Mail Form"
+  spec.description = "Mail form takes a POST request, validates the params, and then sends an email to a specified address"
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
