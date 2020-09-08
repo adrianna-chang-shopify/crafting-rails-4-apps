@@ -2,10 +2,6 @@ require 'test_helper'
 require 'fixtures/sample_mail'
 
 class MailForm::Test < ActiveSupport::TestCase
-  test "truth" do
-    assert_kind_of Module, MailForm
-  end
-
   test "sample mail has name and email as attributes" do
     sample = SampleMail.new
     sample.name = "User"
@@ -33,5 +29,18 @@ class MailForm::Test < ActiveSupport::TestCase
     assert sample.name?
     sample.email = ""
     assert !sample.email?
+  end
+
+  test "delivers an email with attributes" do
+    sample = SampleMail.new
+    # Simulate data from the form
+    sample.email = "user@example.com"
+    sample.deliver
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    mail = ActionMailer::Base.deliveries.last
+
+    assert_equal ["user@example.com"], mail.from
+    assert_match "Email: user@example.com", mail.body.encoded
   end
 end
