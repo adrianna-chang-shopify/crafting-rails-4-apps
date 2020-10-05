@@ -36,12 +36,17 @@ class SqlTemplate < ApplicationRecord
       source = record.body
       identifier = "SqlTemplate - #{record.id} - #{record.path.inspect}"
       handler = ActionView::Template.registered_template_handler(record.handler)
-      details = {
-        format: Mime[record.format],
-        updated_at: record.updated_at,
-        virtual_path: virtual_path(record.path, record.partial)
-      }
-      ActionView::Template.new(source, identifier, handler, details)
+      record_format = Mime[record.format]
+      virtual_path = virtual_path(record.path, record.partial)
+    
+      ActionView::Template.new(
+        source,
+        identifier,
+        handler,
+        format: record_format,
+        locals: [],
+        virtual_path: virtual_path
+      )
     end
 
     # Make paths as "users/user" become "users/_user" for partials.
