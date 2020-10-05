@@ -1,17 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  body: MyText
-  path: MyString
-  format: MyString
-  locale: MyString
-  handler: MyString
-  partial: false
-
-two:
-  body: MyText
-  path: MyString
-  format: MyString
-  locale: MyString
-  handler: MyString
+  id: 1
+  body: "Body"
+  path: "some/path"
+  format: "html"
+  locale: "en"
+  handler: "erb"
   partial: false
