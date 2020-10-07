@@ -4,7 +4,21 @@ class SqlTemplate < ApplicationRecord
   validates :locale, inclusion: I18n.available_locales.map(&:to_s)
   validates :handler, inclusion: ActionView::Template::Handlers.extensions.map(&:to_s)
 
+  # Every time our model is updated, clear the cache so we return the updated template!
+  # Note: this cache is not synced across machines, so will fail if your infra contains
+  # more than one server (ie. Unicorn)
+  # Potential solutions for this
+  # - Reimplement the cache using memcached / Redis so its shared between machines
+  # - Pub / sub solution, where expiring the cache pushes a message to a queue, and
+  # sends message to subscribed instances
+  after_save do
+    SqlTemplate::Resolver.instance.clear_cache
+  end
+
   class Resolver < ActionView::Resolver 
+    require "singleton"
+    include Singleton
+
     protected
 
     def find_templates(name, prefix, partial, details, locals)
