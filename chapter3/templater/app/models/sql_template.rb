@@ -15,6 +15,7 @@ class SqlTemplate < ApplicationRecord
         handler: normalize_array(details[:handlers]),
         partial: partial || false
       }
+
       ::SqlTemplate.where(conditions).map do |record|
         initialize_template(record)
       end 
@@ -36,7 +37,7 @@ class SqlTemplate < ApplicationRecord
       source = record.body
       identifier = "SqlTemplate - #{record.id} - #{record.path.inspect}"
       handler = ActionView::Template.registered_template_handler(record.handler)
-      record_format = Mime[record.format]
+      record_format = record.format.to_sym
       virtual_path = virtual_path(record.path, record.partial)
     
       ActionView::Template.new(
