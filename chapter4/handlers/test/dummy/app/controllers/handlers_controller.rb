@@ -8,4 +8,7 @@ class HandlersController < ApplicationController
 
   def rdiscount_handler
   end
+
+  def merb
+  end
 end
