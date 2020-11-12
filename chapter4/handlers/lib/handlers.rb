@@ -14,7 +14,11 @@ module Handlers
 
     def self.call(template, source)
       compiled_source = erb_handler.call(template, source)
-      "RDiscount.new(begin;#{compiled_source};end).to_html"
+      unless template.format == :html
+        "RDiscount.new(begin;#{compiled_source};end).to_html"
+      else
+        compiled_source
+      end
     end
   end
 end
